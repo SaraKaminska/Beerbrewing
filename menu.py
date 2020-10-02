@@ -1,3 +1,6 @@
+from brew_class import Brew
+
+
 def show_menu():
     print("Ölbryggning")
     print("Välj ett av menyalternativen:")
@@ -49,9 +52,6 @@ def choice_2():
     grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")
     comment = comment_func()
 
-    print(date, malt, hops_60, hops_30, hops_5, yeast, yeast_quantity, fermentation_time, beer_quantity, OG, FG,
-          sugar, description, grade, comment)
-
 
 def choice_3():
     # Will view a list of all the saved objects
@@ -94,7 +94,7 @@ def comment_func():
         comment = input("Ange din kommentar här: ")
         return comment
     else:
-        comment = "Du har inte sparat någon kommentar."
+        comment = "Du har inte sparat någon kommentar på den här brygden."
         return comment
 
 
