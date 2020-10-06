@@ -1,6 +1,5 @@
 from brew_class import Brew
 from ingredient_class import Ingredient, Hops
-from ingredients_class import Ingredients
 
 
 def show_menu():
@@ -26,7 +25,7 @@ def menu_choice():
 
 
 def choice_1():
-    f = open("recept.txt", encoding="utf-8")
+    f = open("recipe.txt", encoding="utf-8")
     text = f.read()
     print(text)
 
@@ -34,26 +33,23 @@ def choice_1():
 def choice_2():
     # Asks the user for some values, and then saves them in a new object
     print("Vänligen besvara frågorna nedan:")
-    date = input("Vilket datum bryggdes ölen? Ange i formatet ÅÅ/MM/DD")
+    date = input("Vilket datum bryggdes ölen? Ange i formatet ÅÅÅÅ/MM/DD")
 
-    ingredients = malt_func()
-
+    ingredients = ingr_func("malt")
     ingredients += hops_func(60)
     ingredients += hops_func(30)
     ingredients += hops_func(5)
+    ingredients += ingr_func("jäst")
 
-    yeast = input("Vilken jäst använde du?")
-    yeast_quantity = int_input(f"Hur många gram {yeast} använde du?")
-
+    sugar = int_input("Hur många gram socker användes vid sockerprimning?")
     fermentation_time = int_input("Hur många dagar jäste ölen i jäskärlet?")
     beer_quantity = int_input("Hur många liter öl fick du ut av din bryggning?")
     OG = int_input("Vilket OG fick du fram vid mätning?")
     FG = int_input("Vilket FG fick du fram vid mätning?")
-    sugar = int_input("Hur många gram socker användes vid sockerprimning?")
-    description = input("Beskriv kort ölets smak och karaktär.")
     grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")
+    description = input("Beskriv kort ölets smak och karaktär.")
     comment = comment_func()
-    brew1 = Brew(date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
+    brew = Brew(date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
 
     print("Din brygd har blivit sparad!")
     show_menu()
@@ -76,15 +72,15 @@ def hops_func(minutes):
     return hops_list
 
 
-def malt_func():
-    malt_number = int_input("Hur många sorter malt har du använt?")
-    malts = []
-    for n in range(malt_number):
-        sort = input("Vilken sorts malt använde du?")
-        amount = input(f"Hur många gram {sort} malt använde du?")
-        malt = Ingredient(sort, amount)
-        malts.append(malt)
-    return malts
+def ingr_func(ingredient):
+    ingr_number = int_input(f"Hur många sorter {ingredient} har du använt?")
+    ingredients = []
+    for n in range(ingr_number):
+        sort = input(f"Vilken sorts {ingredient} använde du?")
+        amount = input(f"Hur många gram {sort} {ingredient} använde du?")
+        ingredient = Ingredient(sort, amount)
+        ingredients.append(ingredient)
+    return ingredients
 
 
 def int_input(user_input):
@@ -109,9 +105,12 @@ def comment_func():
 
 
 def main():
-    malts = malt_func()
-    for malt in malts:
-        malt.print_ingredient()
+    #malts = malt_func()
+    #for malt in malts:
+    #    malt.print_ingredient()
+
+    show_menu()
+    menu_choice()
 
 
 if __name__ == "__main__":
