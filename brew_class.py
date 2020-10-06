@@ -2,9 +2,9 @@ from ingredients_class import Ingredients
 
 
 class Brew:
-    def __init__(self, date, fermentation, quantity, OG, FG, sugar, description, grade, comment):
+    def __init__(self, date, ingredients, fermentation, quantity, OG, FG, sugar, description, grade, comment):
         self.date = date
-        self.ingredients = Ingredients
+        self.ingr_list = ingredients
         self.fermentation = fermentation
         self.quantity = quantity
         self.OG = OG
@@ -21,9 +21,11 @@ class Brew:
 
     def brew_print(self):
         print(f"Datum för bryggning: {self.date}")
-        print(f"Ingredienser: {self.ingredients}")
+        print("Ingredienser:")
+        for ingredient in self.ingr_list:
+            ingredient.print_ingredient()
         print(f"Jästid: {self.fermentation} dagar", 5*" ", f"Mängd färdig brygd: {self.quantity} liter")
-        print(f"Socker tillsatt vid primning: {self.sugar} g", 5*" ", f"Alkoholhalt: {self.abv}")
+        print(f"Socker tillsatt vid primning: {self.sugar} g", 5*" ", f"Alkoholhalt: {self.abv} %")
         print(f"Betyg: {self.grade}", 5*" ", f"Beskrivning: {self.description}")
         print(f"Kommentar: {self.comment}")
 
