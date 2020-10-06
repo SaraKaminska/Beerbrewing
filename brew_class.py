@@ -1,6 +1,3 @@
-from ingredients_class import Ingredients
-
-
 class Brew:
     def __init__(self, date, ingredients, fermentation, quantity, OG, FG, sugar, description, grade, comment):
         self.date = date
