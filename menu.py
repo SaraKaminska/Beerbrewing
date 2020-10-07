@@ -1,9 +1,10 @@
+import pickle
 from brew_class import Brew
 from ingredient_class import Ingredient, Hops
 
 
 def show_menu():
-    print("Ölbryggning")
+    print("ÖLBRYGGNING")
     print("Välj ett av menyalternativen:")
     print("1 Grundrecept för öl")
     print("2 Lägg till ny brygd")
@@ -21,13 +22,14 @@ def menu_choice():
             choice_3()
     else:
         print("Du har gjort ett ogiltigt val. Försök igen.")
-        show_menu()
+        return_to_menu()
 
 
 def choice_1():
     f = open("recipe.txt", encoding="utf-8")
     text = f.read()
     print(text)
+    return_to_menu()
 
 
 def choice_2():
@@ -49,16 +51,40 @@ def choice_2():
     grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")
     description = input("Beskriv kort ölets smak och karaktär.")
     comment = comment_func()
-    brew = Brew(date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
 
+    date = Brew(date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
+
+    with open("saved_brews.txt", "ab") as saved_brews:
+        pickle.dump(date, saved_brews)
     print("Din brygd har blivit sparad!")
-    show_menu()
-    menu_choice()
+
+    return_to_menu()
 
 
 def choice_3():
-    # Will view a list of all the saved objects
-    pass
+    # Views all the saved brews
+    brews = []
+    with open("saved_brews.txt", "rb") as saved_brews:
+        try:
+            brew = pickle.load(saved_brews)
+            brews.append(brew)
+        except EOFError:
+            print("Det finns inga sprade bryggningar.")
+            return_to_menu()
+
+    for brew in brews:
+        brew.brew_print()
+        print("-"*80)
+        print("")
+
+    return_to_menu()
+
+
+def return_to_menu():
+    print("-"*80)
+    print("")
+    show_menu()
+    menu_choice()
 
 
 def hops_func(minutes):
