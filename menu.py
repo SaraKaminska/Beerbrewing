@@ -73,6 +73,7 @@ def choice_3():
             return_to_menu()
 
     for brew in brews:
+        print("")
         brew.brew_print()
         print("-"*80)
         print("")

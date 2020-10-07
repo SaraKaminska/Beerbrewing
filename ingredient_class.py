@@ -13,7 +13,7 @@ class Hops(Ingredient):
         self.boilingtime = boilingtime
 
     def print_ingredient(self):
-        print(f"{self.sort} ({self.amount} g). Koktid: {self.boilingtime} minuter")
+        print(f"{self.sort} ({self.amount} g) Koktid: {self.boilingtime} minuter")
 
 
 def main():

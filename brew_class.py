@@ -20,13 +20,14 @@ class Brew:
         return abv
 
     def brew_print(self):
-        print(f"Datum för bryggning: {self.date}")
-        print("Ingredienser:")
+        print(f"DATUM: {self.date}\n")
+        print("INGREDIENSER:")
         for ingredient in self.ingr_list:
             ingredient.print_ingredient()
-        print(f"Jästid: {self.fermentation} dagar", 5*" ", f"Mängd färdig brygd: {self.quantity} liter")
-        print(f"Socker tillsatt vid primning: {self.sugar} g", 5*" ", f"Alkoholhalt: {self.abv} %")
-        print(f"Betyg: {self.grade}", 5*" ", f"Beskrivning: {self.description}")
+        print("")
+        print(f"Jästid: {self.fermentation} dagar.".ljust(25), f"Mängd färdig brygd: {self.quantity} liter.")
+        print(f"Alkoholhalt: {self.abv} %".ljust(25), f"Socker tillsatt vid primning: {self.sugar} gram.\n")
+        print(f"Betyg: {self.grade}".ljust(25), f"Beskrivning: {self.description}\n")
         print(f"Kommentar: {self.comment}")
 
 
