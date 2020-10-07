@@ -12,6 +12,9 @@ class Brew:
         self.comment = comment
         self.abv = self.abv_func(OG, FG)
 
+    def __str__(self):
+        return self.date
+
     def abv_func(self, OG, FG):
         abv = (OG - FG) * 0.132
         return abv
