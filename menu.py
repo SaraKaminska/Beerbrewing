@@ -1,6 +1,6 @@
 import pickle
 from brew_class import Brew
-from input_functions import ingr_func, hops_func, int_input, comment_func
+from input_functions import ingr_func, hops_func, int_input, comment_func, float_input
 
 
 def show_menu():
@@ -45,7 +45,7 @@ def choice_2():
 
     sugar = int_input("Hur många gram socker användes vid sockerprimning?")
     fermentation_time = int_input("Hur många dagar jäste ölen i jäskärlet?")
-    beer_quantity = int_input("Hur många liter öl fick du ut av din bryggning?")
+    beer_quantity = float_input("Hur många liter öl fick du ut av din bryggning?")
     OG = int_input("Vilket OG fick du fram vid mätning?")
     FG = int_input("Vilket FG fick du fram vid mätning?")
     grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")

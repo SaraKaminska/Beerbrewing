@@ -32,6 +32,15 @@ def int_input(user_input):
             print("Ditt svar måste vara numeriskt.")
 
 
+def float_input(user_input):
+    while True:
+        data = input(user_input)
+        try:
+            return float(data)
+        except ValueError:
+            print("Ditt svar måste vara numeriskt.")
+
+
 def comment_func():
     add_comment = input("Vill du lägga till en kommentar angående den här bryggningen, exempelvis förbättrningsförslag?"
                         " Ange J/N ")
