@@ -5,7 +5,6 @@ from input_functions import ingr_func, hops_func, int_input, comment_func, float
 
 
 def show_menu():
-    print("ÖLBRYGGNING")
     print("Välj ett av menyalternativen:")
     print("1 Grundrecept för öl")
     print("2 Lägg till ny brygd")
@@ -104,7 +103,7 @@ def choice_3():
     return_to_menu()
 
 
-def return_to_menu(*args):
+def return_to_menu():
     print("-"*80)
     print("")
     show_menu()
@@ -112,12 +111,7 @@ def return_to_menu(*args):
 
 
 def main():
-    #malts = malt_func()
-    #for malt in malts:
-    #    malt.print_ingredient()
-
-    show_menu()
-    menu_choice()
+    pass
 
 
 if __name__ == "__main__":

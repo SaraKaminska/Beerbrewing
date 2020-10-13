@@ -17,11 +17,7 @@ class Hops(Ingredient):
 
 
 def main():
-    malt = Ingredient("Pale Ale", 2500)
-    humle = Hops("Citra", 10, 60)
-
-    malt.print_ingredient()
-    humle.print_ingredient()
+    pass
 
 if __name__ == "__main__":
     main()

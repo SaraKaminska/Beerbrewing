@@ -2,6 +2,7 @@ from menu import show_menu, menu_choice
 
 
 def main():
+    print("ÖLBRYGGNING")
     show_menu()
     menu_choice()
 
