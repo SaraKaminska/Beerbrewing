@@ -1,4 +1,5 @@
 import pickle
+import tkinter as tk
 from brew_class import Brew
 from input_functions import ingr_func, hops_func, int_input, comment_func, float_input
 
@@ -26,10 +27,32 @@ def menu_choice():
 
 
 def choice_1():
-    f = open("recipe.txt", encoding="utf-8")
-    text = f.read()
-    print(text)
-    return_to_menu()
+    def return_menu(event):
+        window.destroy()
+        print("-" * 80)
+        print("")
+        show_menu()
+        menu_choice()
+
+    window = tk.Tk()
+    header = tk.Label(window, text="Grundrecept för öl \n", font=("Arial", 20, "bold"), padx=15)
+    header.grid(sticky=tk.W)
+
+    recipe = open("recipe.txt", encoding="utf-8")
+    for line in recipe:
+        if line.startswith(("1", "2", "3", "4", "5", "6", "7")):
+            header = tk.Label(window, text=line, font=("Arial", 10, "bold"), justify="left", wraplength=800, padx=15)
+            header.grid(sticky=tk.W)
+        else:
+            plain = tk.Label(window, text=line, font=("Arial", 10), justify="left", wraplength=800, padx=15)
+            plain.grid(sticky=tk.W)
+    recipe.close()
+
+    button = tk.Button(window, text="Tillbaka till meny")
+    button.grid(sticky=tk.E)
+    button.bind("<ButtonRelease-1>", return_menu)
+
+    window.mainloop()
 
 
 def choice_2():
@@ -81,7 +104,7 @@ def choice_3():
     return_to_menu()
 
 
-def return_to_menu():
+def return_to_menu(*args):
     print("-"*80)
     print("")
     show_menu()
