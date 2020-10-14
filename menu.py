@@ -1,7 +1,8 @@
+import os
 import pickle
 import tkinter as tk
 from brew_class import Brew
-from input_functions import ingr_func, hops_func, int_input, comment_func, float_input
+from input_functions import *
 
 
 def show_menu():
@@ -9,6 +10,7 @@ def show_menu():
     print("1 Grundrecept för öl")
     print("2 Lägg till ny brygd")
     print("3 Visa sparade bryggningar")
+    print("4 Ta bort en bryggning")
 
 
 def menu_choice():
@@ -20,6 +22,8 @@ def menu_choice():
             choice_2()
         elif int(choice) == 3:
             choice_3()
+        elif int(choice) == 4:
+            choice_4()
     else:
         print("Du har gjort ett ogiltigt val. Försök igen.")
         return_to_menu()
@@ -57,6 +61,7 @@ def choice_1():
 def choice_2():
     # Asks the user for some values, and then saves them in a new object
     print("Vänligen besvara frågorna nedan:")
+    name = input("Ange ett namn för din bryggd:")
     date = input("Vilket datum bryggdes ölen? Ange i formatet ÅÅÅÅ/MM/DD")
 
     ingredients = ingr_func("malt")
@@ -74,10 +79,12 @@ def choice_2():
     description = input("Beskriv kort ölets smak och karaktär.")
     comment = comment_func()
 
-    date = Brew(date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
+    file_name = name.lower().replace(" ", "_") + ".brew"
 
-    with open("saved_brews.txt", "ab") as saved_brews:
-        pickle.dump(date, saved_brews)
+    name = Brew(name, date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
+
+    with open(file_name, "wb") as saved_brew:
+        pickle.dump(name, saved_brew)
     print("Din brygd har blivit sparad!")
 
     return_to_menu()
@@ -85,20 +92,27 @@ def choice_2():
 
 def choice_3():
     # Views all the saved brews
-    brews = []
-    with open("saved_brews.txt", "rb") as saved_brews:
-        try:
-            brew = pickle.load(saved_brews)
-            brews.append(brew)
-        except EOFError:
-            print("Det finns inga sprade bryggningar.")
-            return_to_menu()
+    print("SPARADE BRYGGDER:")
+    brew = load_and_pick()
 
-    for brew in brews:
+    with open("saved_brews/"+brew[1], "rb") as brew:
+        brew = pickle.load(brew)
         print("")
         brew.brew_print()
-        print("-"*80)
         print("")
+
+    return_to_menu()
+
+
+def choice_4():
+    print("TA BORT BRYGGD:")
+    brew = load_and_pick()
+    delete = input(f"Vill du ta bort {brew[0]}? J/N")
+    if delete.lower() == "j":
+        os.remove("saved_brews/"+brew[1])
+        print(f"Bryggden {brew[0]} har tagits bort.")
+    else:
+        print("Bryggden har inte tagits bort.")
 
     return_to_menu()
 
@@ -110,8 +124,30 @@ def return_to_menu():
     menu_choice()
 
 
+def load_and_pick():
+    file_no = 1
+    files_dict = {}
+
+    for file in os.listdir("saved_brews"):
+        if file.endswith(".brew"):
+            file_name = file[:-5]
+            file_name = file_name.replace("_", " ").title()
+            files_dict[file_no] = file_name
+            file_no += 1
+
+    if len(files_dict) > 0:
+        for no, brew in files_dict.items():
+            print(f"{no}. {brew}")
+        picked = int_input("Välj en bryggd från listan ovan:")
+        brew = files_dict[picked].lower().replace(" ", "_") + ".brew"
+        return [files_dict[picked], brew]
+    else:
+        print("Du har inga sparade bryggder.")
+        return_to_menu()
+
+
 def main():
-    pass
+    choice_3()
 
 
 if __name__ == "__main__":
