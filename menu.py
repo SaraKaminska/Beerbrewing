@@ -3,30 +3,7 @@ import pickle
 import tkinter as tk
 from brew_class import Brew
 from input_functions import *
-
-
-def show_menu():
-    print("Välj ett av menyalternativen:")
-    print("1 Grundrecept för öl")
-    print("2 Lägg till ny brygd")
-    print("3 Visa sparade bryggningar")
-    print("4 Ta bort en bryggning")
-
-
-def menu_choice():
-    choice = input("Menyval: ")
-    if choice.isdigit():
-        if int(choice) == 1:
-            choice_1()
-        elif int(choice) == 2:
-            choice_2()
-        elif int(choice) == 3:
-            choice_3()
-        elif int(choice) == 4:
-            choice_4()
-    else:
-        print("Du har gjort ett ogiltigt val. Försök igen.")
-        return_to_menu()
+from create_menu import menu1
 
 
 def choice_1():
@@ -34,8 +11,8 @@ def choice_1():
         window.destroy()
         print("-" * 80)
         print("")
-        show_menu()
-        menu_choice()
+        menu1.show_menu()
+        menu1.menu_choice()
 
     window = tk.Tk()
     header = tk.Label(window, text="Grundrecept för öl \n", font=("Arial", 20, "bold"), padx=15)
@@ -95,7 +72,7 @@ def choice_2():
         pickle.dump(name, saved_brew)
     print("Din brygd har blivit sparad!")
 
-    return_to_menu()
+    menu1.return_to_menu()
 
 
 def choice_3():
@@ -109,7 +86,7 @@ def choice_3():
         brew.brew_print()
         print("")
 
-    return_to_menu()
+    menu1.return_to_menu()
 
 
 def choice_4():
@@ -122,14 +99,7 @@ def choice_4():
     else:
         print("Bryggden har inte tagits bort.")
 
-    return_to_menu()
-
-
-def return_to_menu():
-    print("-" * 80)
-    print("")
-    show_menu()
-    menu_choice()
+    menu1.return_to_menu()
 
 
 def load_and_pick():
@@ -143,7 +113,7 @@ def load():
     files_dict = {}
     if len(os.listdir("saved_brews")) == 0:
         print("Du har inga sparade bryggder.")
-        return_to_menu()
+        menu1.return_to_menu()
     else:
         for file in os.listdir("saved_brews"):
             if file.endswith(".brew"):
