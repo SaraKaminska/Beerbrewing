@@ -1,8 +1,9 @@
-from create_menu import menu1
+from menu import Menu
 
 
 def main():
     print("ÖLBRYGGNING")
+    menu1 = Menu()
     menu1.show_menu()
     menu1.menu_choice()
 

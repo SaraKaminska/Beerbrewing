@@ -17,8 +17,9 @@ class Brew:
         return self.name
 
     def abv_func(self, OG, FG):
-        abv = (OG - FG) * 0.132
-        return abv
+        if OG <= 0 or FG <= 0:
+            raise ValueError("Ogiltigt värde, OG och FG kan inte vara 0 eller lägre.")
+        return (OG - FG) * 0.132
 
     def brew_print(self):
         print(f"{self.name} bryggd: {self.date}\n")
