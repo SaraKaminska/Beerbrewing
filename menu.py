@@ -1,5 +1,6 @@
 import os
 import pickle
+import sys
 import tkinter as tk
 from menu_choice_class import MenuChoice
 from brew_class import Brew
@@ -12,8 +13,9 @@ class Menu:
         choice2 = MenuChoice(2, self.choice_2)
         choice3 = MenuChoice(3, self.choice_3)
         choice4 = MenuChoice(4, self.choice_4)
+        choice5 = MenuChoice(5, self.choice_5)
 
-        choices = [choice1, choice2, choice3, choice4]
+        choices = [choice1, choice2, choice3, choice4, choice5]
         self.menu_choices = choices
 
     @staticmethod
@@ -23,10 +25,11 @@ class Menu:
         print("2 Lägg till ny brygd")
         print("3 Visa sparade bryggningar")
         print("4 Ta bort en bryggning")
+        print("5 Avsluta programmet")
 
     def menu_choice(self):
         choice = input("Menyval: ")
-        if choice.isdigit() and 1 <= int(choice) <= 4:
+        if choice.isdigit() and 1 <= int(choice) <= 5:
             self.menu_choices[int(choice)-1].run_menu_function()
         else:
             print("Du har gjort ett ogiltigt val. Försök igen.")
@@ -122,6 +125,10 @@ class Menu:
             print("Bryggden har inte tagits bort.")
 
         self.return_to_menu()
+
+    @staticmethod
+    def choice_5():
+        sys.exit("Allons-y.")
 
     def load_and_pick(self):
         files_dict = self.load()
