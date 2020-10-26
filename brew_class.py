@@ -19,6 +19,8 @@ class Brew:
     def abv_func(self):
         if self.OG < 1000 or self.FG < 1000:
             raise ValueError("Ogiltigt värde, OG och FG kan inte vara 0 eller lägre.")
+        if type(self.OG) != int or type(self.FG) != int:
+            raise TypeError("Ogiltigt värde, OG och FG måste vara numeriska.")
         return (self.OG - self.FG) * 0.132
 
     def brew_print(self):
