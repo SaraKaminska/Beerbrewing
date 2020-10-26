@@ -23,6 +23,15 @@ def ingr_func(ingredient):
     return ingredients
 
 
+def og_fg_func(gravity):
+    while True:
+        n = int_input(f"Vilket {gravity} fick du fram vid mätning? Ange fyra siffror, ex 1050.")
+        if n >= 1000:
+            return n
+        else:
+            print("Du har anget ett ogiltigt värde. Vänligen ange fyra siffror, ex 1050.")
+
+
 def int_input(user_input):
     while True:
         data = input(user_input)

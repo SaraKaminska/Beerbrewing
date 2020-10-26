@@ -89,8 +89,8 @@ class Menu:
         sugar = int_input("Hur många gram socker användes vid sockerprimning?")
         fermentation_time = int_input("Hur många dagar jäste ölen i jäskärlet?")
         beer_quantity = float_input("Hur många liter öl fick du ut av din bryggning?")
-        OG = int_input("Vilket OG fick du fram vid mätning?")
-        FG = int_input("Vilket FG fick du fram vid mätning?")
+        OG = og_fg_func("OG")
+        FG = og_fg_func("FG")
         grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")
         description = input("Beskriv kort ölets smak och karaktär.")
         comment = comment_func()
@@ -99,7 +99,7 @@ class Menu:
 
         name = Brew(name, date, ingredients, fermentation_time, beer_quantity, OG, FG, sugar, description, grade, comment)
 
-        with open(file_name, "wb") as saved_brew:
+        with open("saved_brews/" + file_name, "wb") as saved_brew:
             pickle.dump(name, saved_brew)
         print("Din brygd har blivit sparad!")
 

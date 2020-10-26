@@ -11,15 +11,15 @@ class Brew:
         self.description = description
         self.grade = grade
         self.comment = comment
-        self.abv = self.abv_func(OG, FG)
+        self.abv = self.abv_func()
 
     def __str__(self):
         return self.name
 
-    def abv_func(self, OG, FG):
-        if OG <= 0 or FG <= 0:
+    def abv_func(self):
+        if self.OG < 1000 or self.FG < 1000:
             raise ValueError("Ogiltigt värde, OG och FG kan inte vara 0 eller lägre.")
-        return (OG - FG) * 0.132
+        return (self.OG - self.FG) * 0.132
 
     def brew_print(self):
         print(f"{self.name} bryggd: {self.date}\n")
