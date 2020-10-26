@@ -32,6 +32,16 @@ def og_fg_func(gravity):
             print("Du har anget ett ogiltigt värde. Vänligen ange fyra siffror, ex 1050.")
 
 
+def name_input():
+    while True:
+        special_chars = ["\"", "/", "\\", ":", "*", "?", "<", ">"]
+        name = input(f"Ange ett namn för din bryggd. Följande tecken är ej tillåtna: \" / \ : * ? < >.")
+        if any(char in name for char in special_chars):
+            print("Namnet du angav innehåller ogiltiga tecken, försök igen.")
+        else:
+            return name
+
+
 def int_input(user_input):
     while True:
         data = input(user_input)

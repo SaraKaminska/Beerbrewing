@@ -70,14 +70,7 @@ class Menu:
         # Asks the user for some values, and then saves them in a new object
         print("Vänligen besvara frågorna nedan:")
 
-        while True:
-            special_chars = ["\"", "/", "\\", ":", "*", "?", "<", ">"]
-            name = input(f"Ange ett namn för din bryggd. Följande tecken är ej tillåtna: \" / \ : * ? < >.")
-            if any(char in name for char in special_chars):
-                print("Namnet du angav innehåller ogiltiga tecken, försök igen.")
-            else:
-                break
-
+        name = name_input()
         date = input("Vilket datum bryggdes ölen? Ange i formatet ÅÅÅÅ/MM/DD")
 
         ingredients = ingr_func("malt")
