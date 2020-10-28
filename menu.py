@@ -14,6 +14,7 @@ class Menu:
         choice3 = MenuChoice(3, self.choice_3)
         choice4 = MenuChoice(4, self.choice_4)
         choice5 = MenuChoice(5, self.choice_5)
+        choice6 = MenuChoice(6, self.choice_6)
 
         choices = [choice1, choice2, choice3, choice4, choice5]
         self.menu_choices = choices
@@ -25,7 +26,8 @@ class Menu:
         print("2 Lägg till ny brygd")
         print("3 Visa sparade bryggningar")
         print("4 Ta bort en bryggning")
-        print("5 Avsluta programmet")
+        print("5 Redigera brygd")
+        print("6 Avsluta programmet")
 
     def menu_choice(self):
         choice = input("Menyval: ")
@@ -74,7 +76,7 @@ class Menu:
         print("Vänligen besvara frågorna nedan:")
 
         name = name_input()
-        date = input("Vilket datum bryggdes ölen? Ange i formatet ÅÅÅÅ/MM/DD")
+        date = input("Vilket datum brygdes ölen? Ange i formatet ÅÅÅÅ/MM/DD")
 
         ingredients = ingr_func("malt")
         ingredients += hops_func(60)
@@ -84,7 +86,7 @@ class Menu:
 
         sugar = int_input("Hur många gram socker användes vid sockerprimning?")
         fermentation_time = int_input("Hur många dagar jäste ölen i jäskärlet?")
-        beer_quantity = float_input("Hur många liter öl fick du ut av din bryggning?")
+        beer_quantity = float_input("Hur många liter öl fick du ut av din brygning?")
         OG = og_fg_func("OG")
         FG = og_fg_func("FG")
         grade = int_input("Betygsätt denna brygning på en skala från 1 till 10.")
@@ -103,7 +105,7 @@ class Menu:
 
     def choice_3(self):
         # Views all the saved brews
-        print("SPARADE BRYGGDER:")
+        print("SPARADE BRYGDER:")
         brew = self.load_and_pick()
 
         with open("saved_brews/" + brew[1], "rb") as brew:
@@ -115,19 +117,34 @@ class Menu:
         self.return_to_menu()
 
     def choice_4(self):
-        print("TA BORT BRYGGD:")
+        print("TA BORT BRYGD:")
         brew = self.load_and_pick()
         delete = input(f"Vill du ta bort {brew[0]}? J/N")
         if delete.lower() == "j":
             os.remove("saved_brews/" + brew[1])
-            print(f"Bryggden {brew[0]} har tagits bort.")
+            print(f"Brygden {brew[0]} har tagits bort.")
         else:
-            print("Bryggden har inte tagits bort.")
+            print("Brygden har inte tagits bort.")
 
         self.return_to_menu()
 
+    def choice_5(self):
+        print("REDIGERA BRYGD:")
+        brew = self.load_and_pick()
+        change_options = ["name", "date", "comment"]
+        for n, option in enumerate(change_options):
+            print(n, option)
+        change_num = int_input("Vilken position vill du ändra?")
+        new_value = input(f"Ange ny/nytt {change_options[change_num]}: ")
+
+        with open("saved_brews/" + brew[1], "rb") as brew:
+            brew = pickle.load(brew)
+            brew.change_options[change_num] = new_value #TODO hur kommer jag åt varaibeln?
+            #TODO skriv över befintlig brygd
+
+
     @staticmethod
-    def choice_5():
+    def choice_6():
         sys.exit("Allons-y.")
 
     def load_and_pick(self):
@@ -139,7 +156,7 @@ class Menu:
         file_no = 1
         files_dict = {}
         if len(os.listdir("saved_brews")) == 0:
-            print("Du har inga sparade bryggder.")
+            print("Du har inga sparade brygder.")
             self.return_to_menu()
         else:
             for file in os.listdir("saved_brews"):
@@ -156,17 +173,16 @@ class Menu:
     @staticmethod
     def pick(files_dict):
         while True:
-            picked = int_input("Välj en bryggd från listan ovan:")
+            picked = int_input("Välj en brygd från listan ovan:")
             if picked in files_dict:
                 brew = files_dict[picked].lower().replace(" ", "_") + ".brew"
                 return [files_dict[picked], brew]
             else:
-                print("Det finns ingen bryggd med detta nummer. Försök igen.")
+                print("Det finns ingen brygd med detta nummer. Försök igen.")
 
 
 def main():
     pass
-
 
 if __name__ == "__main__":
     main()

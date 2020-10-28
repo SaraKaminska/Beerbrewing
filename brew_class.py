@@ -24,7 +24,7 @@ class Brew:
         return (self.OG - self.FG) * 0.132
 
     def brew_print(self):
-        print(f"{self.name} bryggd: {self.date}\n")
+        print(f"{self.name} brygd: {self.date}\n")
         print("INGREDIENSER:")
         for ingredient in self.ingr_list:
             ingredient.print_ingredient()
