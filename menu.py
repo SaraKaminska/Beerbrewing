@@ -16,7 +16,7 @@ class Menu:
         choice5 = MenuChoice(5, self.choice_5)
         choice6 = MenuChoice(6, self.choice_6)
 
-        choices = [choice1, choice2, choice3, choice4, choice5]
+        choices = [choice1, choice2, choice3, choice4, choice5, choice6]
         self.menu_choices = choices
 
     @staticmethod
@@ -31,7 +31,7 @@ class Menu:
 
     def menu_choice(self):
         choice = input("Menyval: ")
-        if choice.isdigit() and 1 <= int(choice) <= 5:
+        if choice.isdigit() and 1 <= int(choice) <= 6:
             self.menu_choices[int(choice)-1].run_menu_function()
         else:
             print("Du har gjort ett ogiltigt val. Försök igen.")
@@ -130,17 +130,20 @@ class Menu:
 
     def choice_5(self):
         print("REDIGERA BRYGD:")
-        brew = self.load_and_pick()
+        picked_brew = self.load_and_pick()
         change_options = ["name", "date", "comment"]
         for n, option in enumerate(change_options):
             print(n, option)
         change_num = int_input("Vilken position vill du ändra?")
         new_value = input(f"Ange ny/nytt {change_options[change_num]}: ")
 
-        with open("saved_brews/" + brew[1], "rb") as brew:
-            brew = pickle.load(brew)
-            brew.change_options[change_num] = new_value #TODO hur kommer jag åt varaibeln?
-            #TODO skriv över befintlig brygd
+        with open("saved_brews/" + picked_brew[1], "rb") as saved_brew:
+            brew = pickle.load(saved_brew)
+            brew.__dict__[change_options[change_num]] = new_value
+        with open("saved_brews/" + picked_brew[1], "wb") as saved_brew:
+            pickle.dump(brew, saved_brew)
+
+        self.return_to_menu()
 
 
     @staticmethod
