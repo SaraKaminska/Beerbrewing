@@ -131,18 +131,38 @@ class Menu:
     def choice_5(self):
         print("REDIGERA BRYGD:")
         picked_brew = self.load_and_pick()
-        change_options = ["name", "date", "comment"]
+
+        change_options = ["Namn", "Datum", "Jästid", "Mängd", "Sockerprimning",
+                          "Beskrivning", "Betyg", "Kommentar", "OG", "FG"]
+        change_options_dict = {0: "name", 1: "date", 2: "fermentation", 3: "quantity", 4: "sugar",
+                               5: "description", 6: "grade", 7: "comment", 8: "OG", 9: "FG"}
         for n, option in enumerate(change_options):
             print(n, option)
         change_num = int_input("Vilken position vill du ändra?")
-        new_value = input(f"Ange ny/nytt {change_options[change_num]}: ")
+
+        while True:
+            if change_num in [2, 4, 6, 8, 9]:
+                new_value = int_input(f"Ange ett nytt värde för: {change_options[change_num]}: ")
+                break
+            elif change_num in [0, 1, 5, 7]:
+                new_value = input(f"Ange ett nytt värde för: {change_options[change_num]}: ")
+                break
+            elif change_num == 3:
+                new_value = float_input(f"Ange ett nytt värde för: {change_options[change_num]}: ")
+                break
+            else:
+                print("Ogiltigt val. Försök igen.")
 
         with open("saved_brews/" + picked_brew[1], "rb") as saved_brew:
             brew = pickle.load(saved_brew)
-            brew.__dict__[change_options[change_num]] = new_value
+            brew.__dict__[change_options_dict[change_num]] = new_value
+            if change_num == 8 or change_num == 9:
+                brew.abv = brew.abv_func()
+
         with open("saved_brews/" + picked_brew[1], "wb") as saved_brew:
             pickle.dump(brew, saved_brew)
 
+        print("Ändringen har sparats.")
         self.return_to_menu()
 
 
